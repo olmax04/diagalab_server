@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
-from concurrent_work.database.client import client, add_analyze
+from database.client import add_analyze
 from interfaces.ad_interface import AdInterface
 from interfaces.click_interface import ClickInterface
 from interfaces.cookie_interface import CookieInterface
@@ -21,6 +21,7 @@ from models.result_model import Result
 from utils.formatting import format_float
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
+
 
 class Diag(WebdriverInterface, CookieInterface, AdInterface,
            ClickInterface, PointInterface, PaginationInterface,

@@ -4,7 +4,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.select import Select
 
-from concurrent_work.database.client import client, add_analyze
+from database.client import add_analyze
 from interfaces.click_interface import ClickInterface
 from interfaces.scroll_into_Interface import ScrollIntoInterface
 from interfaces.ad_interface import AdInterface

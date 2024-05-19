@@ -1,12 +1,36 @@
-import tkinter
+import uvicorn
+from fastapi import FastAPI
+from server import Server
 
-from ui_interface import UIInterface
+app = FastAPI(debug=True)
+server = Server()
 
 
-class Application:
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
 
-    def start(self):
-        root = tkinter.Tk()
-        root.wm_minsize(200, 100)
-        app = UIInterface(root)
-        app.mainloop()
+
+# alab
+@app.post('/alab/start')
+async def start_alab():
+    return server.start_alab()
+
+
+@app.post('/alab/stop')
+async def stop_alab():
+    return server.stop_alab()
+
+
+@app.post('/diag/start')
+async def start_diag():
+    return server.start_diag()
+
+
+@app.post('/diag/stop')
+async def stop_diag():
+    return server.stop_diag()
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=5000)
