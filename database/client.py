@@ -43,9 +43,16 @@ def create_source_log(source: str, city: str):
          "ParcedPriceNum": 0, "OfflineOnlyPrices": 0, "NotAavailablePrices": 0})
 
 
-def update_source_log(source: str, city):
+def update_source_log(source: str, city: str):
     record = list(db.statistic.find({"City": city, "Source": source}).sort({"$natural": -1}).limit(1))[0]
-    db.statistic.update_one({"_id": record["_id"]}, {"$set": {"ParsingFinishTime": create_timestamp()}})
+    records = list(db.analyses.find({"source": source, "city": city}))
+    ParcedPriceNum = len(records)
+    OfflineOnlyPrices = len([record for record in records if record["status"] == "offline_only"])
+    NotAavailablePrices = len([record for record in records if record["status"] == "not_available"])
+    db.statistic.update_one({"_id": record["_id"]}, {
+        "$set": {"ParsingFinishTime": create_timestamp(), "ParcedPriceNum": ParcedPriceNum,
+                 "OfflineOnlyPrices": OfflineOnlyPrices,
+                 "NotAavailablePrices": NotAavailablePrices}})
 
 
 if __name__ == "__main__":
