@@ -2,7 +2,7 @@ import threading
 import time
 from threading import Thread
 
-from database.client import get_cities_alab, get_cities_diag, log_message
+from database.client import get_cities_alab, get_cities_diag, log_message, create_source_log, update_source_log
 from services.alab_service import Alab
 from services.diag_service import Diag
 
@@ -22,6 +22,7 @@ class Server:
         for city in cities:
             if self.alab_status:
                 self.alab_object = Alab(city.city, self.alab_status)
+                create_source_log(city=city.city, source="Alab")
                 try:
                     self.alab_object.cookie()
                     self.alab_object.select_point()
@@ -31,7 +32,9 @@ class Server:
                     print(e)
                     log_message(f"Alab error: {e}")
                 finally:
+                    update_source_log(city=city.city, source="Alab")
                     self.alab_object.close()
+        log_message(f"Alab parsing completed")
         self.alab_object = None
         self.alab_thread = None
 
@@ -40,6 +43,7 @@ class Server:
         for city in cities:
             if self.diag_status:
                 self.diag_object = Diag(city.city, self.diag_status)
+                create_source_log(city=city.city, source="Diag")
                 try:
                     self.diag_object.cookie()
                     self.diag_object.click_filter()
@@ -49,7 +53,9 @@ class Server:
                     print(e)
                     log_message(f"Diag error: {e}")
                 finally:
+                    update_source_log(city=city.city, source="Diag")
                     self.diag_object.close()
+        log_message(f"Diag parsing completed")
         self.diag_object = None
         self.diag_thread = None
 

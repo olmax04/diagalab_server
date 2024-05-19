@@ -37,5 +37,16 @@ def get_cities_diag() -> List[City]:
     return [City(item['name']) for item in list(db.cities_diag.find())]
 
 
+def create_source_log(source: str, city: str):
+    db.statistic.insert_one(
+        {"ParsingStartTime": create_timestamp(), "ParsingFinishTime": None, "City": city, "Source": source,
+         "ParcedPriceNum": 0, "OfflineOnlyPrices": 0, "NotAavailablePrices": 0})
+
+
+def update_source_log(source: str, city):
+    record = list(db.statistic.find({"City": city, "Source": source}).sort({"$natural": -1}).limit(1))[0]
+    db.statistic.update_one({"_id": record["_id"]}, {"$set": {"ParsingFinishTime": create_timestamp()}})
+
+
 if __name__ == "__main__":
-    print(get_cities_diag())
+    update_source_log("Alab", "Warszawa")
