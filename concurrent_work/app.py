@@ -4,7 +4,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.logger import logger
 
-from concurrent_work.server import Server
+from server import Server
 
 app = FastAPI(debug=True)
 server = Server()

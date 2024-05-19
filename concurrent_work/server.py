@@ -2,7 +2,7 @@ import threading
 import time
 from threading import Thread
 
-from concurrent_work.database.client import get_cities_alab, get_cities_diag, log_message
+from database.client import get_cities_alab, get_cities_diag, log_message
 from services.alab_service import Alab
 from services.diag_service import Diag
 
