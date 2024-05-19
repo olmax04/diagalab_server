@@ -1,6 +1,7 @@
 from typing import Union, Set, List
 
 import selenium.common.exceptions
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -27,7 +28,9 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
     url: str = "https://diag.pl/sklep/badania/wszystkie-kategorie/"
 
     def __init__(self, city: str, thread_status):
-        self.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+        options = Options()
+        options.headless = True
+        self.driver = webdriver.Firefox(options=options, service=FirefoxService(GeckoDriverManager().install()))
         self.wait = WebDriverWait(driver=self.driver, timeout=15)
         self.city = city
         self.thread_status = thread_status
