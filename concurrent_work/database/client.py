@@ -2,12 +2,22 @@ from typing import List
 
 from pymongo import MongoClient
 
-from schemas.city import City
 from controllers.timestamp_controller import create_timestamp
 
 uri = "mongodb+srv://root:root@databasecluster.j88rtik.mongodb.net/?retryWrites=true&w=majority&appName=DatabaseCluster"
 client = MongoClient(uri)
 db = client['diag_parser']
+
+
+class City:
+    city: str
+
+    def __init__(self, city: str):
+        self.city: str = city
+
+    def __str__(self):
+        return self.city
+
 
 def log_message(message: str):
     db.logs.insert_one({"msg": message, "timestamp": create_timestamp()})
