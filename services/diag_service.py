@@ -21,7 +21,7 @@ from models.result_model import Result
 from utils.formatting import format_float
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
-
+from selenium.webdriver import FirefoxOptions
 
 class Diag(WebdriverInterface, CookieInterface, AdInterface,
            ClickInterface, PointInterface, PaginationInterface,
@@ -29,9 +29,9 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
     url: str = "https://diag.pl/sklep/badania/wszystkie-kategorie/"
 
     def __init__(self, city: str, thread_status):
-        options = Options()
-        options.headless = True
-        self.driver = webdriver.Firefox(options=options, service=FirefoxService(GeckoDriverManager().install()))
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
+        self.driver = webdriver.Firefox(options=opts, service=FirefoxService(GeckoDriverManager().install()))
         self.wait = WebDriverWait(driver=self.driver, timeout=15)
         self.city = city
         self.thread_status = thread_status
