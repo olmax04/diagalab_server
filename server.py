@@ -29,14 +29,15 @@ class Server:
                     self.alab_object.select_point()
                     self.alab_object.get_page()
                     self.alab_object.get_set_info()
+                    update_source_log(city=city.city, source="Alab", null_prices=False)
                 except Exception as e:
                     print(e)
                     log_message(f"Alab error: {e}")
                 except CityException as e:
                     print(e)
                     log_message(f"Alab - CityException on city {city.city}; error: {e}")
+                    update_source_log(city=city.city, source="Alab", null_prices=True)
                 finally:
-                    update_source_log(city=city.city, source="Alab")
                     self.alab_object.close()
         log_message(f"Alab parsing completed")
         self.alab_object = None

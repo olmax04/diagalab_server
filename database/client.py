@@ -43,16 +43,22 @@ def create_source_log(source: str, city: str):
          "ParcedPriceNum": 0, "OfflineOnlyPrices": 0, "NotAavailablePrices": 0})
 
 
-def update_source_log(source: str, city: str):
+def update_source_log(source: str, city: str, null_prices: bool):
     record = list(db.statistic.find({"City": city, "Source": source}).sort({"$natural": -1}).limit(1))[0]
     records = list(db.analyses.find({"source": source, "city": city}))
     ParcedPriceNum = len(records)
     OfflineOnlyPrices = len([record for record in records if record["status"] == "offline_only"])
     NotAavailablePrices = len([record for record in records if record["status"] == "not_available"])
-    db.statistic.update_one({"_id": record["_id"]}, {
-        "$set": {"ParsingFinishTime": create_timestamp(), "ParcedPriceNum": ParcedPriceNum,
-                 "OfflineOnlyPrices": OfflineOnlyPrices,
-                 "NotAavailablePrices": NotAavailablePrices}})
+    if null_prices:
+        db.statistic.update_one({"_id": record["_id"]}, {
+            "$set": {"ParsingFinishTime": create_timestamp(), "ParcedPriceNum": 0,
+                     "OfflineOnlyPrices": 0,
+                     "NotAavailablePrices": 0}})
+    else:
+        db.statistic.update_one({"_id": record["_id"]}, {
+            "$set": {"ParsingFinishTime": create_timestamp(), "ParcedPriceNum": ParcedPriceNum,
+                     "OfflineOnlyPrices": OfflineOnlyPrices,
+                     "NotAavailablePrices": NotAavailablePrices}})
 
 def insert_town():
     cities = [
