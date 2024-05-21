@@ -2,8 +2,9 @@ import os
 import uvicorn
 from fastapi import FastAPI
 from server import Server
+from dotenv import find_dotenv, load_dotenv
 
-os.environ['GH_TOKEN'] = "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"
+load_dotenv(find_dotenv())
 
 app = FastAPI(debug=True)
 server = Server()
