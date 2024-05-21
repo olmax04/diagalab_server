@@ -58,7 +58,7 @@ class Server:
                     print(e)
                     log_message(f"Diag error: {e}")
                 finally:
-                    update_source_log(city=city.city, source="Diag")
+                    update_source_log(city=city.city, source="Diag", null_prices=False)
                     self.diag_object.close()
         log_message(f"Diag parsing completed")
         self.diag_object = None
