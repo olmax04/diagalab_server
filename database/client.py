@@ -22,9 +22,8 @@ class City:
 def log_message(message: str):
     db.logs.insert_one({"msg": message, "timestamp": create_timestamp()})
 
-
 def add_analyze(analyze):
-    db.analyses.update_one({'source': analyze.source, 'city': analyze.city, 'name': analyze.name},
+    db.analyses.update_one({'source': analyze.source, 'city': analyze.city, 'name': analyze.name, "status": analyze.status},
                            {'$set': analyze.__dict__}, upsert=True)
     log_message(f"Analyze on source {analyze.source} created, city: {analyze.city}, name: {analyze.name}")
 
