@@ -38,7 +38,6 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
         self.city = city
         self.thread_status = thread_status
         self.set_driver_config()
-        self.get_page()
 
     def get_page(self, url="https://diag.pl/sklep/badania/wszystkie-kategorie/") -> None:
         self.driver.get(url)

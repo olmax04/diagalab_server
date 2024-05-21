@@ -21,6 +21,7 @@ class Server:
     def alab_work(self):
         cities = get_cities_alab()
         for city in cities:
+
             if self.alab_status:
                 self.alab_object = Alab(city.city, self.alab_status)
                 create_source_log(city=city.city, source="Alab")
@@ -50,6 +51,7 @@ class Server:
                 self.diag_object = Diag(city.city, self.diag_status)
                 create_source_log(city=city.city, source="Diag")
                 try:
+                    self.diag_object.get_page()
                     self.diag_object.cookie()
                     self.diag_object.click_filter()
                     self.diag_object.select_point()
