@@ -24,6 +24,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver import FirefoxOptions
 
+
 class Diag(WebdriverInterface, CookieInterface, AdInterface,
            ClickInterface, PointInterface, PaginationInterface,
            DataInterface):
@@ -132,7 +133,12 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
                 result.update(record_result)
             try:
                 self.next_page()
-                self.click_filter()
+                try:
+                    self.click_filter()
+                except selenium.common.exceptions.TimeoutException:
+                    time.sleep(0.5)
+                    self.driver.refresh()
+                    self.click_filter()
                 time.sleep(0.5)
             except AssertionError:
                 pagination = False

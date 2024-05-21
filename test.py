@@ -52,34 +52,34 @@ TEST ALAB
 """
 from exceptions.CityException import CityException
 from services.alab_service import Alab
-alab = Alab("Miasto-x", True)
-try:
-    alab.cookie()
-    alab.select_point()
-    alab.get_page()
-    results = alab.get_set_info()
-    for result in results:
-        print(result)
-    print(len(results))
-except CityException as e:
-    print(e)
-finally:
-    alab.close()
+# alab = Alab("Miasto-x", True)
+# try:
+#     alab.cookie()
+#     alab.select_point()
+#     alab.get_page()
+#     results = alab.get_set_info()
+#     for result in results:
+#         print(result)
+#     print(len(results))
+# except CityException as e:
+#     print(e)
+# finally:
+#     alab.close()
 
 """
 TEST DIAG
 """
 from services.diag_service import Diag
 
-# diag = Diag("Warszawa", True)
-# diag.cookie()
-# diag.click_filter()
-# diag.select_point()
-# results = diag.get_set_info()
-# for result in results:
-#     print(result)
-# len(results)
-# diag.close()
+diag = Diag("Warszawa", True)
+diag.cookie()
+diag.click_filter()
+diag.select_point()
+results = diag.get_set_info()
+for result in results:
+    print(result)
+len(results)
+diag.close()
 # from datetime import datetime
 #
 # # Get the current timestamp
