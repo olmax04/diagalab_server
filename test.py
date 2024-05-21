@@ -50,45 +50,51 @@
 """
 TEST ALAB
 """
+from exceptions.CityException import CityException
 from services.alab_service import Alab
+# alab = Alab("Miasto-x", True)
+# try:
+#     alab.cookie()
+#     alab.select_point()
+#     alab.get_page()
+#     results = alab.get_set_info()
+#     for result in results:
+#         print(result)
+#     print(len(results))
+# except CityException as e:
+#     print(e)
+# finally:
+#     alab.close()
 
-# alab = Alab("Warszawa")
-# alab.cookie()
-# alab.select_point()
-# alab.get_page()
-# results = alab.get_set_info()
-# for result in results:
-#     print(result)
-# alab.close()
+"""
+TEST DIAG
+"""
+from services.diag_service import Diag
 
-# """
-# TEST DIAG
-# """
-# from services.diag_service import Diag
+diag = Diag("Warszawa", True)
+diag.cookie()
+diag.click_filter()
+diag.select_point()
+results = diag.get_set_info()
+for result in results:
+    print(result)
+len(results)
+diag.close()
+# from datetime import datetime
 #
-# diag = Diag("Warszawa")
-# diag.cookie()
-# diag.click_filter()
-# diag.select_point()
-# results = diag.get_set_info()
-# for result in results:
-#     print(result)
-# diag.close()
-from datetime import datetime
-
-# Get the current timestamp
-from datetime import datetime
-
-# Get the current timestamp
-current_timestamp = datetime.timestamp(datetime.now())
-
-# Convert the timestamp to a datetime object
-current_datetime = datetime.fromtimestamp(current_timestamp)
-
-# Format the datetime object
-formatted_datetime = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
-
-print("Formatted datetime:", formatted_datetime)
+# # Get the current timestamp
+# from datetime import datetime
+#
+# # Get the current timestamp
+# current_timestamp = datetime.timestamp(datetime.now())
+#
+# # Convert the timestamp to a datetime object
+# current_datetime = datetime.fromtimestamp(current_timestamp)
+#
+# # Format the datetime object
+# formatted_datetime = current_datetime.strftime('%Y-%m-%d %H:%M:%S')
+#
+# print("Formatted datetime:", formatted_datetime)
 
 # предположим, что у вас есть следующие списки
 # cities = ["City1", "City2", "City3"]

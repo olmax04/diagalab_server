@@ -3,6 +3,7 @@ import time
 from threading import Thread
 
 from database.client import get_cities_alab, get_cities_diag, log_message, create_source_log, update_source_log
+from exceptions.CityException import CityException
 from services.alab_service import Alab
 from services.diag_service import Diag
 
@@ -31,6 +32,9 @@ class Server:
                 except Exception as e:
                     print(e)
                     log_message(f"Alab error: {e}")
+                except CityException as e:
+                    print(e)
+                    log_message(f"Alab - CityException on city {city.city}; error: {e}")
                 finally:
                     update_source_log(city=city.city, source="Alab")
                     self.alab_object.close()

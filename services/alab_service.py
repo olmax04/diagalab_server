@@ -5,6 +5,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.select import Select
 
 from database.client import add_analyze
+from exceptions.CityException import CityException
 from interfaces.click_interface import ClickInterface
 from interfaces.scroll_into_Interface import ScrollIntoInterface
 from interfaces.ad_interface import AdInterface
@@ -94,19 +95,25 @@ class Alab(CookieInterface, DataInterface, PointInterface,
     def select_option_value(self, element: WebElement, value: str) -> None:
         select = Select(element)
         options = select.options
+        selected_city = None
         for i, option in enumerate(options):
             if option.text == value:
+                selected_city = value
                 select.select_by_index(i)
                 break
+        if selected_city is None:
+            raise CityException("CityException")
 
     def select_point(self) -> None:
         button = self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "catalog-select-point-button")))
         self.scroll_into_element(button)
         self.click_element(button)
         # Выбор города
-
-        city_select_item = self.wait.until(EC.visibility_of_element_located((By.ID, 'shop-location-city')))
-        self.select_option_value(city_select_item, self.city)
+        try:
+            city_select_item = self.wait.until(EC.visibility_of_element_located((By.ID, 'shop-location-city')))
+            self.select_option_value(city_select_item, self.city)
+        except CityException as e:
+            raise e
 
         # Выбор отделения
         shop_select_item = self.wait.until(EC.visibility_of_element_located((By.ID, 'shop-location-punkt')))

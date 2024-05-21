@@ -1,3 +1,4 @@
+import time
 from typing import Union, Set, List
 
 import selenium.common.exceptions
@@ -128,9 +129,11 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
                 record_result: Set[Result] = set(self.get_one_info(record))
                 for item in record_result:
                     add_analyze(item)
-                result.update(result)
+                result.update(record_result)
             try:
                 self.next_page()
+                self.click_filter()
+                time.sleep(0.5)
             except AssertionError:
                 pagination = False
         return result

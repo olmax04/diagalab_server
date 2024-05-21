@@ -54,6 +54,22 @@ def update_source_log(source: str, city: str):
                  "OfflineOnlyPrices": OfflineOnlyPrices,
                  "NotAavailablePrices": NotAavailablePrices}})
 
+def insert_town():
+    cities = [
+        "Bielsko-Biała", "Bydgoszcz", "Bytom", "Częstochowa", "Człuchów", "Dobczyce",
+        "Gdańsk", "Gdynia", "Gliwice", "Głowno", "Gorzów Wielkopolski", "Grudziądz",
+        "Jaworzno", "Katowice", "Kołobrzeg", "Koszalin", "Kościerzyna", "Kożuchów",
+        "Kraków", "Lublin", "Łowicz", "Łódź", "Międzyrzecz", "Mikołów", "Myślenice",
+        "Nowa Sól", "Nysa", "Otmuchów", "Paczków", "Piotrków Trybunalski", "Poznań",
+        "Rybnik", "Rzeszów", "Sosnowiec", "Starogard Gdański", "Sulechów", "Świebodzin",
+        "Tarnów", "Tczew", "Tomaszów Lubelski", "Toruń", "Tychy", "Warszawa", "Wieliczka",
+        "Włocławek", "Wolbrom", "Wołomin", "Wrocław", "Zabrze", "Ząbkowice Śląskie",
+        "Zielona Góra", "Żary", "Smolec", "Brodnica", "Skórzewo", "Szczecin", "Bardo", "Rumia"
+    ]
+    for city in cities:
+        db.cities_alab.insert_one({"name": city})
+        # db.cities_diag.insert_one({"name": city})
 
 if __name__ == "__main__":
-    update_source_log("Alab", "Warszawa")
+    # update_source_log("Alab", "Warszawa")
+    insert_town()
