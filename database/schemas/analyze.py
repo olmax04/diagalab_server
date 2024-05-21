@@ -1,4 +1,4 @@
-from controllers.timestamp_controller import create_timestamp
+from utils.timestamp import create_timestamp
 
 
 class Analyze:

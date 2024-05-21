@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 from database.client import add_analyze
+from exceptions.CityException import CityException
 from interfaces.ad_interface import AdInterface
 from interfaces.click_interface import ClickInterface
 from interfaces.cookie_interface import CookieInterface
@@ -60,8 +61,11 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
             EC.visibility_of_element_located((By.XPATH, "//ul[@aria-labelledby=\"city-label\"]")))
         # с9е6
         # city_element = cities_element.find_element(By.XPATH, f".//li[text()=\"{self.city}\"]")
-        city_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, f".//li[text()=\"{self.city}\"]")))
-        self.click_element(city_element)
+        try:
+            city_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, f".//li[text()=\"{self.city}\"]")))
+            self.click_element(city_element)
+        except Exception:
+            raise CityException("CityException")
 
         # Выбор отделения
         self.click_button_xpath("//button[text()=\"Wybierz\"]")

@@ -2,7 +2,7 @@ from typing import List
 
 from pymongo import MongoClient
 
-from controllers.timestamp_controller import create_timestamp
+from utils.timestamp import create_timestamp
 
 uri = "mongodb+srv://root:root@databasecluster.j88rtik.mongodb.net/?retryWrites=true&w=majority&appName=DatabaseCluster"
 client = MongoClient(uri)

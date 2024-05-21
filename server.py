@@ -59,13 +59,16 @@ class Server:
                 except Exception as e:
                     print(e)
                     log_message(f"Diag error: {e}")
+                except CityException as e:
+                    print(e)
+                    log_message(f"Diag - CityException on city {city.city}; error: {e}")
+                    update_source_log(city=city.city, source="Alab", null_prices=True)
                 finally:
                     update_source_log(city=city.city, source="Diag", null_prices=False)
                     self.diag_object.close()
         log_message(f"Diag parsing completed")
         self.diag_object = None
         self.diag_thread = None
-
 
     def start_alab(self):
         if self.alab_thread is None:
@@ -114,4 +117,3 @@ class Server:
             self.alab_object = None
             log_message("Alab Process stopped")
             return 200
-
