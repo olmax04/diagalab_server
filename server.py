@@ -62,7 +62,7 @@ class Server:
                 except CityException as e:
                     print(e)
                     log_message(f"Diag - CityException on city {city.city}; error: {e}")
-                    update_source_log(city=city.city, source="Alab", null_prices=True)
+                    update_source_log(city=city.city, source="Diag", null_prices=True)
                 finally:
                     update_source_log(city=city.city, source="Diag", null_prices=False)
                     self.diag_object.close()
