@@ -33,7 +33,7 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
 
     def __init__(self, city: str, thread_status):
         opts = FirefoxOptions()
-        opts.add_argument("--headless")
+        # opts.add_argument("--headless")
         self.driver = webdriver.Firefox(options=opts, service=FirefoxService(GeckoDriverManager().install()))
         self.wait = WebDriverWait(driver=self.driver, timeout=15)
         self.city = city
@@ -56,13 +56,14 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
 
         self.click_button_xpath("//p[text()='Wybierz swój punkt pobrań']")
         # Выбор города
-        self.click_button_id("city")
-        cities_element = self.wait.until(
-            EC.visibility_of_element_located((By.XPATH, "//ul[@aria-labelledby=\"city-label\"]")))
+        # self.click_button_id("mui-component-select-city")
+        self.wait.until(EC.visibility_of_element_located((By.ID, "mui-component-select-city"))).click()
+        # cities_element = self.wait.until(
+        #     EC.visibility_of_element_located((By.XPATH, "//ul[@aria-labelledby=\"city-label\"]")))
         # с9е6
         # city_element = cities_element.find_element(By.XPATH, f".//li[text()=\"{self.city}\"]")
         try:
-            city_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, f".//li[text()=\"{self.city}\"]")))
+            city_element = self.wait.until(EC.visibility_of_element_located((By.XPATH, f"//span[contains(text(), \"{self.city}\")]")))
             self.click_element(city_element)
         except Exception:
             raise CityException("CityException")

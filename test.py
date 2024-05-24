@@ -72,6 +72,7 @@ TEST DIAG
 from services.diag_service import Diag
 
 diag = Diag("Warszawa", True)
+diag.get_page()
 diag.cookie()
 diag.click_filter()
 diag.select_point()
