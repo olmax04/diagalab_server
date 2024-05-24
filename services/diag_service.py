@@ -33,7 +33,7 @@ class Diag(WebdriverInterface, CookieInterface, AdInterface,
 
     def __init__(self, city: str, thread_status):
         opts = FirefoxOptions()
-        # opts.add_argument("--headless")
+        opts.add_argument("--headless")
         self.driver = webdriver.Firefox(options=opts, service=FirefoxService(GeckoDriverManager().install()))
         self.wait = WebDriverWait(driver=self.driver, timeout=15)
         self.city = city
